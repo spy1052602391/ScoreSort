@@ -1,0 +1,77 @@
+package 每日一题.成绩排序;
+
+import java.util.*;
+
+class Person implements Comparator{
+    String name;
+    Integer score;
+    @Override
+    public int compare(Object o1, Object o2) {
+        Person person1 = (Person)o1;
+        Person person2 = (Person)o2;
+        if(Test.num != 0)
+            return person1.score - person2.score;
+        else
+            return  person2.score - person1.score;
+    }
+
+    @Override
+    public String toString() {
+        return name+" "+score;
+    }
+}
+
+public class Test {
+    static int num = 0;
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        while(sc.hasNext()){
+            int N = sc.nextInt();
+            int M = sc.nextInt();
+            num = M;
+            List<Person> list = new ArrayList<>();
+            for (int i = 0; i < N; i++) {
+                Person person = new Person();
+                person.name = sc.next();
+                person.score = sc.nextInt();
+                list.add(person);
+            }
+            Collections.sort(list,new Person());
+            for(int i=0; i<list.size(); i++)
+                System.out.println(list.get(i));
+        }
+    }
+
+    public void code(){
+        Scanner sc = new Scanner(System.in);
+        while(sc.hasNext()) {
+            int N = sc.nextInt();
+            int num = sc.nextInt();
+            Map<Integer, String> map = null;
+            if (num != 0) {
+                map = new TreeMap<>();
+            } else {
+                map = new TreeMap<>(new Comparator<Integer>() {
+                    @Override
+                    public int compare(Integer o1, Integer o2) {
+                        int num = o2 - o1;
+                        if(num == 0)
+                            return -1;
+                        return num;
+                    }
+                });
+            }
+            for (int i = 0; i < N; i++) {
+                String str2 = sc.next();
+                int str1 = sc.nextInt();
+                map.put(str1, str2);
+            }
+            Set<Map.Entry<Integer, String>> set = map.entrySet();
+            Iterator<Map.Entry<Integer, String>> iterator = set.iterator();
+            while (iterator.hasNext()) {
+                Map.Entry<Integer, String> entry = iterator.next();
+                System.out.println(entry.getValue() + " " + entry.getKey());
+            }
+        }
+    }
+}
